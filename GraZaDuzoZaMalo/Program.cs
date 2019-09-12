@@ -14,6 +14,9 @@ namespace Proceduralnie
             Console.Clear();
             Console.WriteLine("Aplikacja GRA");
             Console.WriteLine("=============");
+            licznik = 0;
+            czas = Stopwatch.StartNew();
+
         }
 
         static int Losuj()
@@ -60,6 +63,7 @@ namespace Proceduralnie
                     Environment.Exit(1);
                 }
             }
+            licznik++;
             return propozycja;
         }
 
@@ -85,6 +89,17 @@ namespace Proceduralnie
             return false;
 
         }
+        static void Statystyki()
+        {
+            czas.Stop();
+            Console.WriteLine("Statystyki gry: ");
+            Console.WriteLine($"- czas gry: {czas.Elapsed}");
+            Console.WriteLine($"- liczba ruchów: {licznik}");
+        }
+
+        static int licznik=0;
+        static Stopwatch czas;
+
         static void Main(string[] args)
         {
             Start();
@@ -92,12 +107,21 @@ namespace Proceduralnie
             bool trafiono;
             do
             {
-                //wczytaj propozycję
-                int y = WczytajPropozycję();
+                int y;
+                try
+                {
+                    //wczytaj propozycję
+                    y = WczytajPropozycję();
+                }
+                catch (ArgumentException)
+                { Console.WriteLine("Szkoda, że się poddajesz.");
+                    return;
+                }
                 //oceń propozycję
                 trafiono = Ocena(x, y);
             }
             while (!trafiono);
+            Statystyki();
         }
 
     }
