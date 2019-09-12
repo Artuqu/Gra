@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ConsoleApp1
 {
@@ -13,17 +14,82 @@ namespace ConsoleApp1
 
             //1. Komputer losuje liczbę z podanego zakresu
             Random los = new Random();
-            int wylosowana = los.Next(1,101);
+            int wylosowana = los.Next(1, 101);// 101 jest z wyłaczeniem
 #if DEBUG
             Console.WriteLine(wylosowana);   // do usnięcia w Release
-#endif
-            //powtarzaj wielokrotnie, aż odgadnie
-            //2. Człowiek proponuje (odgaduje)
+#endif      
+            Console.WriteLine("wylosowałem liczbę z zakresu od 1 do 100. Odgadnij ją.");
 
-            //3. Komputer ocenia propzycję
+            Stopwatch czas = Stopwatch.StartNew();
+
+            //powtarzaj wielokrotnie, aż odgadnie
+            bool odgadniete = false;
+            int licznik = 0;
+
+            do
+            {
+                licznik++;
+                //2. Człowiek proponuje (odgaduje)
+                Console.Write("Podaj swoją propozycję: ");
+                string napis = Console.ReadLine();
+
+                if(napis == "koniec")
+                {
+                    Console.WriteLine("Szkoda, że mnie opuszczasz.");
+                    return;
+                }
+                int propozycja = 0;
+                try
+                {
+                    propozycja = int.Parse(napis);
+                }
+                catch (FormatException)
+
+                {
+                    Console.WriteLine("Nie podano liczby.\nSpróbuj jeszcze raz");
+                    continue;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Przesadziłeś. Za duża liczba");
+
+
+
+                    continue;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Niezydentyfikowany wyjątek. Awaria");
+                    Environment.Exit(1);
+                }
+
+                //3. Komputer ocenia propozycję
+
+                if (propozycja < wylosowana)
+                {
+                    Console.WriteLine("Za mało");
+                }
+
+                else if (propozycja > wylosowana)
+
+                { Console.WriteLine("Za dużo"); }
+
+                else
+                {
+                    Console.WriteLine("Trafiłeś");
+                    //odgadniete = true;
+                    break;
+                }
+
+            }// while (!odgadniete);
+            while (true);
+
             // koniec powtarzaj
+            czas.Stop();
 
             //4. Wypisz statystyki gry
+            Console.WriteLine($"Liczba ruchów: {licznik}");
+            Console.WriteLine($"Czas gry:{czas.Elapsed}");
 
         }
     }
