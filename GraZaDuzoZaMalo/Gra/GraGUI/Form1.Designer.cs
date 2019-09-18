@@ -39,10 +39,14 @@
             this.groupBoxOdgadywanie = new System.Windows.Forms.GroupBox();
             this.labelOcena = new System.Windows.Forms.Label();
             this.buttonWyslij = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxPropozycja = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBoxStatystyki = new System.Windows.Forms.GroupBox();
+            this.labelLiczbaRuchow = new System.Windows.Forms.Label();
+            this.labelCzasGry = new System.Windows.Forms.Label();
             this.groupBoxLosowanie.SuspendLayout();
             this.groupBoxOdgadywanie.SuspendLayout();
+            this.groupBoxStatystyki.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonNowaGra
@@ -61,6 +65,7 @@
             this.textBoxOd.Name = "textBoxOd";
             this.textBoxOd.Size = new System.Drawing.Size(100, 20);
             this.textBoxOd.TabIndex = 1;
+            this.textBoxOd.TextChanged += new System.EventHandler(this.textBoxOd_TextChanged);
             // 
             // textBoxDo
             // 
@@ -129,7 +134,7 @@
             // 
             this.groupBoxOdgadywanie.Controls.Add(this.labelOcena);
             this.groupBoxOdgadywanie.Controls.Add(this.buttonWyslij);
-            this.groupBoxOdgadywanie.Controls.Add(this.textBox1);
+            this.groupBoxOdgadywanie.Controls.Add(this.textBoxPropozycja);
             this.groupBoxOdgadywanie.Controls.Add(this.label1);
             this.groupBoxOdgadywanie.Location = new System.Drawing.Point(35, 282);
             this.groupBoxOdgadywanie.Name = "groupBoxOdgadywanie";
@@ -156,13 +161,14 @@
             this.buttonWyslij.TabIndex = 2;
             this.buttonWyslij.Text = "Wyślij";
             this.buttonWyslij.UseVisualStyleBackColor = true;
+            this.buttonWyslij.Click += new System.EventHandler(this.buttonWyslij_Click);
             // 
-            // textBox1
+            // textBoxPropozycja
             // 
-            this.textBox1.Location = new System.Drawing.Point(19, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBoxPropozycja.Location = new System.Drawing.Point(19, 46);
+            this.textBoxPropozycja.Name = "textBoxPropozycja";
+            this.textBoxPropozycja.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPropozycja.TabIndex = 1;
             // 
             // label1
             // 
@@ -173,11 +179,41 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Wylosowałem liczbę odgadnij ją";
             // 
+            // groupBoxStatystyki
+            // 
+            this.groupBoxStatystyki.Controls.Add(this.labelCzasGry);
+            this.groupBoxStatystyki.Controls.Add(this.labelLiczbaRuchow);
+            this.groupBoxStatystyki.Location = new System.Drawing.Point(35, 405);
+            this.groupBoxStatystyki.Name = "groupBoxStatystyki";
+            this.groupBoxStatystyki.Size = new System.Drawing.Size(325, 73);
+            this.groupBoxStatystyki.TabIndex = 7;
+            this.groupBoxStatystyki.TabStop = false;
+            this.groupBoxStatystyki.Text = "Statystyki gry";
+            // 
+            // labelLiczbaRuchow
+            // 
+            this.labelLiczbaRuchow.AutoSize = true;
+            this.labelLiczbaRuchow.Location = new System.Drawing.Point(6, 28);
+            this.labelLiczbaRuchow.Name = "labelLiczbaRuchow";
+            this.labelLiczbaRuchow.Size = new System.Drawing.Size(81, 13);
+            this.labelLiczbaRuchow.TabIndex = 0;
+            this.labelLiczbaRuchow.Text = "Liczba Ruchów";
+            // 
+            // labelCzasGry
+            // 
+            this.labelCzasGry.AutoSize = true;
+            this.labelCzasGry.Location = new System.Drawing.Point(6, 57);
+            this.labelCzasGry.Name = "labelCzasGry";
+            this.labelCzasGry.Size = new System.Drawing.Size(47, 13);
+            this.labelCzasGry.TabIndex = 1;
+            this.labelCzasGry.Text = "Czas gry";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(424, 457);
+            this.ClientSize = new System.Drawing.Size(429, 531);
+            this.Controls.Add(this.groupBoxStatystyki);
             this.Controls.Add(this.groupBoxOdgadywanie);
             this.Controls.Add(this.buttonPoddaj);
             this.Controls.Add(this.groupBoxLosowanie);
@@ -188,6 +224,8 @@
             this.groupBoxLosowanie.PerformLayout();
             this.groupBoxOdgadywanie.ResumeLayout(false);
             this.groupBoxOdgadywanie.PerformLayout();
+            this.groupBoxStatystyki.ResumeLayout(false);
+            this.groupBoxStatystyki.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -204,9 +242,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelOcena;
         private System.Windows.Forms.Button buttonWyslij;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxPropozycja;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBoxOdgadywanie;
+        private System.Windows.Forms.GroupBox groupBoxStatystyki;
+        private System.Windows.Forms.Label labelCzasGry;
+        private System.Windows.Forms.Label labelLiczbaRuchow;
     }
 }
 

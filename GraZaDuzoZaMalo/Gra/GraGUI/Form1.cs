@@ -14,11 +14,12 @@ namespace GraGUI
     public partial class Form1 : Form
     {
         private ModelGry gra;
-        private object goupBoxOdgadywanie;
 
         public Form1()
         {
             InitializeComponent();
+            buttonLosuj.Enabled = false;
+            groupBoxStatystyki.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,34 +45,100 @@ namespace GraGUI
             int x;
             try
             {
-                 x = int.Parse(textBoxOd.Text);
-                
+                x = int.Parse(textBoxOd.Text);
+
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 textBoxOd.BackColor = Color.Red;
                 return;
             }
-            textBoxOd.BackColor = Color.White;
+            textBoxOd.BackColor = textBoxDo.BackColor = Color.White;
 
             int y = int.Parse(textBoxDo.Text);
 
             groupBoxLosowanie.Enabled = false;
             groupBoxOdgadywanie.Visible = true;
-            
 
-            gra = new ModelGry(x,y);
-            
+
+            gra = new ModelGry(x, y);
+
         }
+
+        
+        private bool blokada()
+        {
+            int wynik1, wynik2;
+            if (int.TryParse(textBoxDo.Text, out wynik1)
+                &&
+                int.TryParse(textBoxOd.Text, out wynik2))
+                return true;
+            else
+                return false;
+        }
+
 
         private void textBoxDo_TextChanged(object sender, EventArgs e)
         {
             int wynik;
             if (int.TryParse(textBoxDo.Text, out wynik))
+            {
                 textBoxDo.BackColor = Color.LightGreen;
+            }
             else
-                textBoxDo.BackColor = Color.LightPink; //int.Parse() na wejściu string '123' i konwersja na int 123 jeżeli się nie uda to jest wyjątek
-            // może być też TryParse od razu daje wynik prawda lub fałsz
+            {
+                textBoxDo.BackColor = Color.LightPink;
+            }
+            buttonLosuj.Enabled = blokada();
+        }
+
+        private void textBoxOd_TextChanged(object sender, EventArgs e)
+        {
+            int wynik;
+            if (int.TryParse(textBoxOd.Text, out wynik))
+            {
+                textBoxOd.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                textBoxOd.BackColor = Color.LightPink;
+            }
+            buttonLosuj.Enabled = blokada();
+        }
+        private void statystyki()
+        {
+            groupBoxStatystyki.Visible = true;
+            labelLiczbaRuchow.Text = "Liczba ruchów = " + gra.Historia.Count.ToString();  //.ToString(); $Liczba ruchów = {gra.Historia.Count}
+            TimeSpan czas = gra.Historia[gra.Historia.Count - 1].Czas - gra.Historia[0].Czas; // count daje liczbę np 3 ale w tablicy pole wynosi 2
+            labelCzasGry.Text = $"Czas gry = {czas}";
+        }
+
+        private void buttonWyslij_Click(object sender, EventArgs e)
+        {
+            int propozycja = int.Parse(textBoxPropozycja.Text);
+            var odpowiedz = gra.Ocena(propozycja);
+            switch (odpowiedz)
+            {
+                case ModelGry.Odp.ZaMalo:
+                    labelOcena.Text = "Za mało.";
+                    labelOcena.ForeColor = Color.Red;
+                    break;
+                case ModelGry.Odp.Trafione:
+                    labelOcena.Text = "Trafione.";
+                    labelOcena.ForeColor = Color.Green;
+                    buttonWyslij.Enabled = false;
+                    statystyki();
+                    buttonNowaGra.Enabled = true;
+                    break;
+                case ModelGry.Odp.ZaDuzo:
+                    labelOcena.Text = "Za dużo";
+                    labelOcena.ForeColor = Color.Red;
+                    break;
+                default:
+                    break;
+            }
+
+
         }
     }
 }
